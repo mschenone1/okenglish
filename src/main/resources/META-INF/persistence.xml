@@ -16,6 +16,8 @@
     <class>modelo.UsuariosAlumnos</class>
     <class>modelo.Administradores</class>
     <class>modelo.Nivel</class>
+    <class>modelo2.Usuario</class>
+    <class>modelo.Usuario</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

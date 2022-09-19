@@ -62,9 +62,9 @@ public class Clase implements Serializable {
     @JoinColumn(name = "idHorario", referencedColumnName = "idHorario")
     @ManyToOne(optional = false)
     private Horarios idHorario;
-    @JoinColumn(name = "idprofesor", referencedColumnName = "idprofesor")
+    @JoinColumn(name = "idProfesor", referencedColumnName = "idProfesor")
     @ManyToOne(optional = false)
-    private Profesores idprofesor;
+    private Profesores idProfesor;
 
     public Clase() {
     }
@@ -128,12 +128,12 @@ public class Clase implements Serializable {
         this.idHorario = idHorario;
     }
 
-    public Profesores getIdprofesor() {
-        return idprofesor;
+    public Profesores getIdProfesor() {
+        return idProfesor;
     }
 
-    public void setIdprofesor(Profesores idprofesor) {
-        this.idprofesor = idprofesor;
+    public void setIdProfesor(Profesores idProfesor) {
+        this.idProfesor = idProfesor;
     }
 
     @Override

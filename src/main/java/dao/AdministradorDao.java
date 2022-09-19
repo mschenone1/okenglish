@@ -25,14 +25,15 @@ public class AdministradorDao implements iDao<Administradores, String> {
     public Optional<Administradores> encontrar(String id) throws SQLException {
         Connection conn = null;
         String tipodoc = "", num_doc = "", apePaterno = "", apeMaterno = "",
-                nombres = "", telefono = "", celular = "", email = "", sexo = "";
+                nombres = "", telefono = "", celular = "", email = "", 
+                sexo = "", usuario = "";
         Date fecNac = new Date();
         int idadmin = 0;
         try {
             conn = MySQLConexion.getConexion();
             String sql = "SELECT idadmin, tipo_doc, num_doc, apePaterno, \n"
                     + "apeMaterno, nombres, telefono, celular, email, fecNac, sexo\n"
-                    + "FROM administradores WHERE idadmin = ?";
+                    + " , usuario FROM administradores WHERE idadmin = ?";
 
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, id);
@@ -49,6 +50,7 @@ public class AdministradorDao implements iDao<Administradores, String> {
                 email = rs.getString("email");
                 fecNac = rs.getDate("fecNac");
                 sexo = rs.getString("sexo");
+                sexo = rs.getString("usuario");
 
             }
         } catch (Exception e) {
@@ -63,7 +65,7 @@ public class AdministradorDao implements iDao<Administradores, String> {
             }
         }
         return Optional.of(new Administradores(idadmin, tipodoc, num_doc, apePaterno,
-                apeMaterno, nombres, telefono, celular, email, fecNac, sexo));
+                apeMaterno, nombres, telefono, celular, email, fecNac, sexo, usuario));
     }
 
     @Override
@@ -75,7 +77,7 @@ public class AdministradorDao implements iDao<Administradores, String> {
             conn = MySQLConexion.getConexion();
             String sql = "SELECT idadmin, tipo_doc, num_doc, apePaterno, \n"
                     + "apeMaterno, nombres, telefono, celular, email, fecNac, sexo\n"
-                    + "FROM administradores";
+                    + ", usuario FROM administradores";
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             //llenar el arraylist con la clase entidad
@@ -92,6 +94,7 @@ public class AdministradorDao implements iDao<Administradores, String> {
                 ad.setEmail(rs.getString("email"));
                 ad.setFecNac(rs.getDate("fecNac"));
                 ad.setSexo(rs.getString("sexo"));
+                ad.setSexo(rs.getString("usuario"));
 
                 lis.add(ad);
             }
@@ -119,7 +122,7 @@ public class AdministradorDao implements iDao<Administradores, String> {
             conn = MySQLConexion.getConexion();
             String sql = "INSERT INTO administradores (null, tipo_doc, num_doc, apePaterno,\n"
                     + "apeMaterno, nombres, telefono, celular, email, fecNac, sexo)\n"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, ad.getTipoDoc());
             st.setString(2, ad.getNumDoc());
@@ -131,6 +134,7 @@ public class AdministradorDao implements iDao<Administradores, String> {
             st.setString(8, ad.getEmail());
             st.setDate(9, (java.sql.Date) ad.getFecNac());
             st.setString(10, ad.getSexo());
+            st.setString(11, ad.getUsuario());
             inserto = st.executeUpdate() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -155,7 +159,7 @@ public class AdministradorDao implements iDao<Administradores, String> {
             conn = MySQLConexion.getConexion();
             String sql = "UPDATE administradores SET tipo_doc = ?, num_doc = ?, apePaterno = ?,\n"
                     + " apeMaterno = ?, nombres = ?, telefono = ?, celular = ?,\n"
-                    + " email = ?, fecNac = ?, sexo = ? WHERE idadmin = ?";
+                    + " email = ?, fecNac = ?, sexo = ?, usuario = ? WHERE idadmin = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, ad.getTipoDoc());
             st.setString(2, ad.getNumDoc());
@@ -167,7 +171,8 @@ public class AdministradorDao implements iDao<Administradores, String> {
             st.setString(8, ad.getEmail());
             st.setDate(9, (java.sql.Date) ad.getFecNac());
             st.setString(10, ad.getSexo());
-            st.setInt(11, ad.getIdadmin());
+            st.setString(11, ad.getUsuario());
+            st.setInt(12, ad.getIdadmin());
             actualizo = st.executeUpdate() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();

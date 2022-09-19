@@ -27,14 +27,15 @@ public class AlumnoDao implements iDao<Alumnos, String> {
 
         Connection conn = null;
         String tipodoc = "", num_doc = "", apePaterno = "", apeMaterno = "",
-                nombres = "", telefono = "", celular = "", email = "", sexo = "";
+                nombres = "", telefono = "", celular = "", email = "", 
+                sexo = "", usuario = "";
         Date fecNac = new Date();
         int idalumno = 0;
         try {
             conn = MySQLConexion.getConexion();
             String sql = "SELECT idalumno, tipo_doc, num_doc, apePaterno, \n"
                     + "apeMaterno, nombres, telefono, celular, email, fecNac, sexo\n"
-                    + "FROM alumnos WHERE idalumno = ?";
+                    + ", usuario FROM alumnos WHERE idalumno = ?";
 
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, id);
@@ -51,6 +52,7 @@ public class AlumnoDao implements iDao<Alumnos, String> {
                 email = rs.getString("email");
                 fecNac = rs.getDate("fecNac");
                 sexo = rs.getString("sexo");
+                usuario = rs.getString("usuario");
 
             }
         } catch (Exception e) {
@@ -65,7 +67,7 @@ public class AlumnoDao implements iDao<Alumnos, String> {
             }
         }
         return Optional.of(new Alumnos(idalumno, tipodoc, num_doc, apePaterno,
-                apeMaterno, nombres, telefono, celular, email, fecNac, sexo));
+                apeMaterno, nombres, telefono, celular, email, fecNac, sexo, usuario));
     }
 
     @Override
@@ -77,13 +79,13 @@ public class AlumnoDao implements iDao<Alumnos, String> {
             conn = MySQLConexion.getConexion();
             String sql = "SELECT idalumno, tipo_doc, num_doc, apePaterno, \n"
                     + "apeMaterno, nombres, telefono, celular, email, fecNac, sexo\n"
-                    + "FROM alumnos";
+                    + ", usuario FROM alumnos";
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             //llenar el arraylist con la clase entidad
             while (rs.next()) {
                 Alumnos al = new Alumnos();
-                al.setIdalumno(rs.getInt("idalumno"));
+                al.setIdAlumno(rs.getInt("idalumno"));
                 al.setTipoDoc(rs.getString("tipo_doc"));
                 al.setNumDoc(rs.getString("num_doc"));
                 al.setApePaterno(rs.getString("apePaterno"));
@@ -94,6 +96,7 @@ public class AlumnoDao implements iDao<Alumnos, String> {
                 al.setEmail(rs.getString("email"));
                 al.setFecNac(rs.getDate("fecNac"));
                 al.setSexo(rs.getString("sexo"));
+                al.setUsuario(rs.getString("usuario"));
 
                 lis.add(al);
             }
@@ -121,7 +124,7 @@ public class AlumnoDao implements iDao<Alumnos, String> {
             conn = MySQLConexion.getConexion();
             String sql = "INSERT INTO alumnos (null, tipo_doc, num_doc, apePaterno,\n"
                     + "apeMaterno, nombres, telefono, celular, email, fecNac, sexo)\n"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, al.getTipoDoc());
             st.setString(2, al.getNumDoc());
@@ -133,6 +136,7 @@ public class AlumnoDao implements iDao<Alumnos, String> {
             st.setString(8, al.getEmail());
             st.setDate(9, (java.sql.Date) al.getFecNac());
             st.setString(10, al.getSexo());
+            st.setString(11, al.getUsuario());
             inserto = st.executeUpdate() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -157,7 +161,7 @@ public class AlumnoDao implements iDao<Alumnos, String> {
             conn = MySQLConexion.getConexion();
             String sql = "UPDATE alumnos SET tipo_doc = ?, num_doc = ?, apePaterno = ?,\n"
                     + " apeMaterno = ?, nombres = ?, telefono = ?, celular = ?,\n"
-                    + " email = ?, fecNac = ?, sexo = ? WHERE idalumno = ?";
+                    + " email = ?, fecNac = ?, sexo = ?, usuario = ? WHERE idalumno = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, al.getTipoDoc());
             st.setString(2, al.getNumDoc());
@@ -169,7 +173,8 @@ public class AlumnoDao implements iDao<Alumnos, String> {
             st.setString(8, al.getEmail());
             st.setDate(9, (java.sql.Date) al.getFecNac());
             st.setString(10, al.getSexo());
-            st.setInt(11, al.getIdalumno());
+            st.setString(11, al.getUsuario());
+            st.setInt(12, al.getIdAlumno());
             actualizo = st.executeUpdate() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -194,7 +199,7 @@ public class AlumnoDao implements iDao<Alumnos, String> {
             conn = MySQLConexion.getConexion();
             String sql = "DELETE FROM  alumnos WHERE idalumno = ?";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, al.getIdalumno());
+            st.setInt(1, al.getIdAlumno());
             borro = st.executeUpdate() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();

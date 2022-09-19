@@ -11,7 +11,11 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,94 +31,33 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author msche
  */
-@Entity
-@Table(name = "alumnos")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Alumnos.findAll", query = "SELECT a FROM Alumnos a"),
-    @NamedQuery(name = "Alumnos.findByIdalumno", query = "SELECT a FROM Alumnos a WHERE a.idalumno = :idalumno"),
-    @NamedQuery(name = "Alumnos.findByTipoDoc", query = "SELECT a FROM Alumnos a WHERE a.tipoDoc = :tipoDoc"),
-    @NamedQuery(name = "Alumnos.findByNumDoc", query = "SELECT a FROM Alumnos a WHERE a.numDoc = :numDoc"),
-    @NamedQuery(name = "Alumnos.findByApePaterno", query = "SELECT a FROM Alumnos a WHERE a.apePaterno = :apePaterno"),
-    @NamedQuery(name = "Alumnos.findByApeMaterno", query = "SELECT a FROM Alumnos a WHERE a.apeMaterno = :apeMaterno"),
-    @NamedQuery(name = "Alumnos.findByNombres", query = "SELECT a FROM Alumnos a WHERE a.nombres = :nombres"),
-    @NamedQuery(name = "Alumnos.findByTelefono", query = "SELECT a FROM Alumnos a WHERE a.telefono = :telefono"),
-    @NamedQuery(name = "Alumnos.findByCelular", query = "SELECT a FROM Alumnos a WHERE a.celular = :celular"),
-    @NamedQuery(name = "Alumnos.findByEmail", query = "SELECT a FROM Alumnos a WHERE a.email = :email"),
-    @NamedQuery(name = "Alumnos.findByFecNac", query = "SELECT a FROM Alumnos a WHERE a.fecNac = :fecNac"),
-    @NamedQuery(name = "Alumnos.findBySexo", query = "SELECT a FROM Alumnos a WHERE a.sexo = :sexo")})
-public class Alumnos implements Serializable {
+public class Alumnos {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idalumno")
-    private Integer idalumno;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "tipo_doc")
-    private Character tipoDoc;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "num_doc")
+    private Integer idAlumno;
+    private String tipoDoc;
     private String numDoc;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "apePaterno")
     private String apePaterno;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "apeMaterno")
     private String apeMaterno;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "nombres")
     private String nombres;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "telefono")
     private String telefono;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "celular")
     private String celular;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "email")
     private String email;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecNac")
-    @Temporal(TemporalType.DATE)
     private Date fecNac;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1)
-    @Column(name = "sexo")
     private String sexo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idalumno")
-    private Collection<ClaseAlumno> claseAlumnoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idalumno")
-    private Collection<UsuariosAlumnos> usuariosAlumnosCollection;
+    private String usuario;
 
     public Alumnos() {
     }
 
-    public Alumnos(Integer idalumno) {
-        this.idalumno = idalumno;
+    public Alumnos(Integer idAlumno) {
+        this.idAlumno = idAlumno;
     }
 
-    public Alumnos(Integer idalumno, Character tipoDoc, String numDoc, String apePaterno, String apeMaterno, String nombres, String telefono, String celular, String email, Date fecNac, String sexo) {
-        this.idalumno = idalumno;
+    public Alumnos(Integer idAlumno, String tipoDoc, String numDoc,
+            String apePaterno, String apeMaterno, String nombres, 
+            String telefono, String celular, String email, Date fecNac,
+            String sexo, String usuario) {
+        this.idAlumno = idAlumno;
         this.tipoDoc = tipoDoc;
         this.numDoc = numDoc;
         this.apePaterno = apePaterno;
@@ -125,21 +68,22 @@ public class Alumnos implements Serializable {
         this.email = email;
         this.fecNac = fecNac;
         this.sexo = sexo;
+        this.usuario = usuario;
     }
 
-    public Integer getIdalumno() {
-        return idalumno;
+    public Integer getIdAlumno() {
+        return idAlumno;
     }
 
-    public void setIdalumno(Integer idalumno) {
-        this.idalumno = idalumno;
+    public void setIdAlumno(Integer idAlumno) {
+        this.idAlumno = idAlumno;
     }
 
-    public Character getTipoDoc() {
+    public String getTipoDoc() {
         return tipoDoc;
     }
 
-    public void setTipoDoc(Character tipoDoc) {
+    public void setTipoDoc(String tipoDoc) {
         this.tipoDoc = tipoDoc;
     }
 
@@ -215,47 +159,12 @@ public class Alumnos implements Serializable {
         this.sexo = sexo;
     }
 
-    @XmlTransient
-    public Collection<ClaseAlumno> getClaseAlumnoCollection() {
-        return claseAlumnoCollection;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setClaseAlumnoCollection(Collection<ClaseAlumno> claseAlumnoCollection) {
-        this.claseAlumnoCollection = claseAlumnoCollection;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    @XmlTransient
-    public Collection<UsuariosAlumnos> getUsuariosAlumnosCollection() {
-        return usuariosAlumnosCollection;
-    }
-
-    public void setUsuariosAlumnosCollection(Collection<UsuariosAlumnos> usuariosAlumnosCollection) {
-        this.usuariosAlumnosCollection = usuariosAlumnosCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idalumno != null ? idalumno.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Alumnos)) {
-            return false;
-        }
-        Alumnos other = (Alumnos) object;
-        if ((this.idalumno == null && other.idalumno != null) || (this.idalumno != null && !this.idalumno.equals(other.idalumno))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "modelo.Alumnos[ idalumno=" + idalumno + " ]";
-    }
-    
 }

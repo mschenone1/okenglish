@@ -23,14 +23,15 @@ public class ProfesorDao implements iDao<Profesores, String> {
     public Optional<Profesores> encontrar(String id) throws SQLException {
         Connection conn = null;
         String tipodoc = "", num_doc = "", apePaterno = "", apeMaterno = "",
-                nombres = "", telefono = "", celular = "", email = "", sexo = "";
+                nombres = "", telefono = "", celular = "", email = "",
+                sexo = "", usuario = "";
         Date fecNac = new Date();
         int idprofesor = 0;
         try {
             conn = MySQLConexion.getConexion();
             String sql = "SELECT idprofesor, tipo_doc, num_doc, apePaterno, \n"
                     + "apeMaterno, nombres, telefono, celular, email, fecNac, sexo\n"
-                    + "FROM profesores WHERE idprofesor = ?";
+                    + ", usuario FROM profesores WHERE idprofesor = ?";
 
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, id);
@@ -47,6 +48,7 @@ public class ProfesorDao implements iDao<Profesores, String> {
                 email = rs.getString("email");
                 fecNac = rs.getDate("fecNac");
                 sexo = rs.getString("sexo");
+                usuario = rs.getString("usuario");
 
             }
         } catch (Exception e) {
@@ -61,7 +63,7 @@ public class ProfesorDao implements iDao<Profesores, String> {
             }
         }
         return Optional.of(new Profesores(idprofesor, tipodoc, num_doc, apePaterno,
-                apeMaterno, nombres, telefono, celular, email, fecNac, sexo));
+                apeMaterno, nombres, telefono, celular, email, fecNac, sexo, usuario));
     }
 
     @Override
@@ -73,13 +75,13 @@ public class ProfesorDao implements iDao<Profesores, String> {
             conn = MySQLConexion.getConexion();
             String sql = "SELECT idprofesor, tipo_doc, num_doc, apePaterno, \n"
                     + "apeMaterno, nombres, telefono, celular, email, fecNac, sexo\n"
-                    + "FROM profesores";
+                    + ", usuario FROM profesores";
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             //llenar el arraylist con la clase entidad
             while (rs.next()) {
                 Profesores ad = new Profesores();
-                ad.setIdprofesor(rs.getInt("idprofesor"));
+                ad.setIdProfesor(rs.getInt("idprofesor"));
                 ad.setTipoDoc(rs.getString("tipo_doc"));
                 ad.setNumDoc(rs.getString("num_doc"));
                 ad.setApePaterno(rs.getString("apePaterno"));
@@ -90,6 +92,7 @@ public class ProfesorDao implements iDao<Profesores, String> {
                 ad.setEmail(rs.getString("email"));
                 ad.setFecNac(rs.getDate("fecNac"));
                 ad.setSexo(rs.getString("sexo"));
+                ad.setUsuario(rs.getString("usuario"));
 
                 lis.add(ad);
             }
@@ -117,7 +120,7 @@ public class ProfesorDao implements iDao<Profesores, String> {
             conn = MySQLConexion.getConexion();
             String sql = "INSERT INTO profesores (null, tipo_doc, num_doc, apePaterno,\n"
                     + "apeMaterno, nombres, telefono, celular, email, fecNac, sexo)\n"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, ad.getTipoDoc());
             st.setString(2, ad.getNumDoc());
@@ -129,6 +132,7 @@ public class ProfesorDao implements iDao<Profesores, String> {
             st.setString(8, ad.getEmail());
             st.setDate(9, (java.sql.Date) ad.getFecNac());
             st.setString(10, ad.getSexo());
+            st.setString(11, ad.getUsuario());
             inserto = st.executeUpdate() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -153,7 +157,7 @@ public class ProfesorDao implements iDao<Profesores, String> {
             conn = MySQLConexion.getConexion();
             String sql = "UPDATE profesores SET tipo_doc = ?, num_doc = ?, apePaterno = ?,\n"
                     + " apeMaterno = ?, nombres = ?, telefono = ?, celular = ?,\n"
-                    + " email = ?, fecNac = ?, sexo = ? WHERE idprofesor = ?";
+                    + " email = ?, fecNac = ?, sexo = ?, usuario = ? WHERE idprofesor = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, ad.getTipoDoc());
             st.setString(2, ad.getNumDoc());
@@ -165,7 +169,8 @@ public class ProfesorDao implements iDao<Profesores, String> {
             st.setString(8, ad.getEmail());
             st.setDate(9, (java.sql.Date) ad.getFecNac());
             st.setString(10, ad.getSexo());
-            st.setInt(11, ad.getIdprofesor());
+            st.setString(11, ad.getUsuario());
+            st.setInt(12, ad.getIdProfesor());
             actualizo = st.executeUpdate() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -190,7 +195,7 @@ public class ProfesorDao implements iDao<Profesores, String> {
             conn = MySQLConexion.getConexion();
             String sql = "DELETE FROM  profesores WHERE idprofesor = ?";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, ad.getIdprofesor());
+            st.setInt(1, ad.getIdProfesor());
             borro = st.executeUpdate() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();

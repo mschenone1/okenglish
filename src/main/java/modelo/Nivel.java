@@ -24,40 +24,12 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author msche
  */
-@Entity
-@Table(name = "nivel")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Nivel.findAll", query = "SELECT n FROM Nivel n"),
-    @NamedQuery(name = "Nivel.findByIdNivel", query = "SELECT n FROM Nivel n WHERE n.idNivel = :idNivel"),
-    @NamedQuery(name = "Nivel.findByNomNivel", query = "SELECT n FROM Nivel n WHERE n.nomNivel = :nomNivel"),
-    @NamedQuery(name = "Nivel.findByNomLibro", query = "SELECT n FROM Nivel n WHERE n.nomLibro = :nomLibro"),
-    @NamedQuery(name = "Nivel.findByLinkLibro", query = "SELECT n FROM Nivel n WHERE n.linkLibro = :linkLibro")})
-public class Nivel implements Serializable {
+public class Nivel {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idNivel")
     private Integer idNivel;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nomNivel")
     private String nomNivel;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "nomLibro")
     private String nomLibro;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "linkLibro")
     private String linkLibro;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idNivel")
-    private Collection<Cursos> cursosCollection;
 
     public Nivel() {
     }
@@ -105,38 +77,4 @@ public class Nivel implements Serializable {
         this.linkLibro = linkLibro;
     }
 
-    @XmlTransient
-    public Collection<Cursos> getCursosCollection() {
-        return cursosCollection;
-    }
-
-    public void setCursosCollection(Collection<Cursos> cursosCollection) {
-        this.cursosCollection = cursosCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idNivel != null ? idNivel.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Nivel)) {
-            return false;
-        }
-        Nivel other = (Nivel) object;
-        if ((this.idNivel == null && other.idNivel != null) || (this.idNivel != null && !this.idNivel.equals(other.idNivel))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "modelo.Nivel[ idNivel=" + idNivel + " ]";
-    }
-    
 }
