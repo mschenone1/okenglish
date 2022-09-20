@@ -16,7 +16,7 @@ import java.util.Optional;
  */
 public interface iDao<T, ID> {
 
-    Optional<T> encontrar(ID id) throws SQLException;
+    T encontrar(ID id) throws SQLException;
 
     List<T> encontrarTodos() throws SQLException;
 

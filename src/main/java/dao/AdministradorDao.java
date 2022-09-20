@@ -19,16 +19,19 @@ import util.MySQLConexion;
  *
  * @author msche
  */
-public class AdministradorDao implements iDao<Administradores, String> {
+public class AdministradorDao implements iDao<Administradores, Integer> {
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public Optional<Administradores> encontrar(String id) throws SQLException {
+    public Administradores encontrar(Integer id) throws SQLException {
         Connection conn = null;
-        String tipodoc = "", num_doc = "", apePaterno = "", apeMaterno = "",
-                nombres = "", telefono = "", celular = "", email = "", 
-                sexo = "", usuario = "";
-        Date fecNac = new Date();
-        int idadmin = 0;
+        Administradores ad = new Administradores();
+                
         try {
             conn = MySQLConexion.getConexion();
             String sql = "SELECT idadmin, tipo_doc, num_doc, apePaterno, \n"
@@ -36,21 +39,21 @@ public class AdministradorDao implements iDao<Administradores, String> {
                     + " , usuario FROM administradores WHERE idadmin = ?";
 
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setString(1, id);
+            st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                idadmin = rs.getInt("idadmin");
-                tipodoc = rs.getString("tipo_doc");
-                num_doc = rs.getString("num_doc");
-                apePaterno = rs.getString("apePaterno");
-                apeMaterno = rs.getString("apeMaterno");
-                nombres = rs.getString("nombres");
-                telefono = rs.getString("telefono");
-                celular = rs.getString("celular");
-                email = rs.getString("email");
-                fecNac = rs.getDate("fecNac");
-                sexo = rs.getString("sexo");
-                sexo = rs.getString("usuario");
+                ad.setIdadmin(rs.getInt("idadmin"));
+                ad.setTipoDoc(rs.getString("tipo_doc"));
+                ad.setNumDoc(rs.getString("num_doc"));
+                ad.setApePaterno(rs.getString("apePaterno"));
+                ad.setApeMaterno(rs.getString("apeMaterno"));
+                ad.setNombres(rs.getString("nombres"));
+                ad.setTelefono(rs.getString("telefono"));
+                ad.setCelular(rs.getString("celular"));
+                ad.setEmail(rs.getString("email"));
+                ad.setFecNac(rs.getDate("fecNac"));
+                ad.setSexo(rs.getString("sexo"));
+                ad.setSexo(rs.getString("usuario"));
 
             }
         } catch (Exception e) {
@@ -64,8 +67,7 @@ public class AdministradorDao implements iDao<Administradores, String> {
             } catch (Exception e2) {
             }
         }
-        return Optional.of(new Administradores(idadmin, tipodoc, num_doc, apePaterno,
-                apeMaterno, nombres, telefono, celular, email, fecNac, sexo, usuario));
+        return ad;
     }
 
     @Override

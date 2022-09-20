@@ -57,11 +57,9 @@ public class UsuarioDao implements iDao<Usuario, String> {
     }
 
     @Override
-    public Optional<Usuario> encontrar(String id) throws SQLException {
+    public Usuario encontrar(String id) throws SQLException {
         Connection conn = null;
-        String usuario = "", password = "";
-        Date fecNac = new Date();
-        int enabled = 0, idRol = 0;
+        Usuario us = new Usuario();
         try {
             conn = MySQLConexion.getConexion();
             String sql = "SELECT usuario, password, enabled, idRol\n"
@@ -71,10 +69,11 @@ public class UsuarioDao implements iDao<Usuario, String> {
             st.setString(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                usuario = rs.getString("usuario");
-                password = rs.getString("password");
-                enabled = rs.getInt("enabled");
-                idRol = rs.getInt("idRol");
+                
+                us.setUsuario(rs.getString("usuario"));
+                us.setPassword(rs.getString("password"));
+                us.setEnabled(rs.getInt("enabled"));
+                us.setIdRol(rs.getInt("idrol"));
 
             }
         } catch (Exception e) {
@@ -88,7 +87,7 @@ public class UsuarioDao implements iDao<Usuario, String> {
             } catch (Exception e2) {
             }
         }
-        return Optional.of(new Usuario(usuario, password, enabled, idRol));
+        return us;
     }
 
     @Override
@@ -140,6 +139,40 @@ public class UsuarioDao implements iDao<Usuario, String> {
     @Override
     public boolean borrar(Usuario o) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public int idAdm_Alu_Pro(String usuario) {
+        int id = 0;
+        Connection conn = null;
+        try {
+            conn = MySQLConexion.getConexion();
+            String sql = "select tbl1.id from\n"
+                    + " (select ad.idadmin as ID, ad.usuario as usr from administradores ad\n"
+                    + " UNION\n"
+                    + "select al.idAlumno as ID, al.usuario as usr from alumnos al\n"
+                    + " UNION\n"
+                    + "select pr.idProfesor as ID, pr.usuario as usr from profesores pr) as tbl1\n"
+                    + " where tbl1.usr = ?";
+
+            //? =equivale a un parametro 
+            PreparedStatement st = conn.prepareStatement(sql);
+            //relacionar el ? con su variable 
+            st.setString(1, usuario);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+        } catch (Exception e) {
+        } finally {
+            try {
+
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e2) {
+            }
+        }
+        return id;
     }
 
 }

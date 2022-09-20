@@ -20,17 +20,14 @@ import java.util.ArrayList;
  *
  * @author msche
  */
-public class AlumnoDao implements iDao<Alumnos, String> {
+public class AlumnoDao implements iDao<Alumnos, Integer> {
 
     @Override
-    public Optional<Alumnos> encontrar(String id) throws SQLException {
+    public Alumnos encontrar(Integer id) throws SQLException {
 
         Connection conn = null;
-        String tipodoc = "", num_doc = "", apePaterno = "", apeMaterno = "",
-                nombres = "", telefono = "", celular = "", email = "", 
-                sexo = "", usuario = "";
-        Date fecNac = new Date();
-        int idalumno = 0;
+        Alumnos al = new Alumnos();
+                
         try {
             conn = MySQLConexion.getConexion();
             String sql = "SELECT idalumno, tipo_doc, num_doc, apePaterno, \n"
@@ -38,21 +35,21 @@ public class AlumnoDao implements iDao<Alumnos, String> {
                     + ", usuario FROM alumnos WHERE idalumno = ?";
 
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setString(1, id);
+            st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                idalumno = rs.getInt("idalumno");
-                tipodoc = rs.getString("tipo_doc");
-                num_doc = rs.getString("num_doc");
-                apePaterno = rs.getString("apePaterno");
-                apeMaterno = rs.getString("apeMaterno");
-                nombres = rs.getString("nombres");
-                telefono = rs.getString("telefono");
-                celular = rs.getString("celular");
-                email = rs.getString("email");
-                fecNac = rs.getDate("fecNac");
-                sexo = rs.getString("sexo");
-                usuario = rs.getString("usuario");
+                al.setIdAlumno(rs.getInt("idalumno"));
+                al.setTipoDoc(rs.getString("tipo_doc"));
+                al.setNumDoc(rs.getString("num_doc"));
+                al.setApePaterno(rs.getString("apePaterno"));
+                al.setApeMaterno(rs.getString("apeMaterno"));
+                al.setNombres(rs.getString("nombres"));
+                al.setTelefono(rs.getString("telefono"));
+                al.setCelular(rs.getString("celular"));
+                al.setEmail(rs.getString("email"));
+                al.setFecNac(rs.getDate("fecNac"));
+                al.setSexo(rs.getString("sexo"));
+                al.setUsuario(rs.getString("usuario"));
 
             }
         } catch (Exception e) {
@@ -66,8 +63,7 @@ public class AlumnoDao implements iDao<Alumnos, String> {
             } catch (Exception e2) {
             }
         }
-        return Optional.of(new Alumnos(idalumno, tipodoc, num_doc, apePaterno,
-                apeMaterno, nombres, telefono, celular, email, fecNac, sexo, usuario));
+        return al;
     }
 
     @Override
