@@ -4,9 +4,33 @@
         <servlet-name>LoginControl</servlet-name>
         <servlet-class>controlador.LoginControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdministradorControl</servlet-name>
+        <servlet-class>controlador.AdministradorControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfesorControl</servlet-name>
+        <servlet-class>controlador.ProfesorControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AlumnoControl</servlet-name>
+        <servlet-class>controlador.AlumnoControl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginControl</servlet-name>
         <url-pattern>/LoginControl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorControl</servlet-name>
+        <url-pattern>/AdministradorControl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfesorControl</servlet-name>
+        <url-pattern>/ProfesorControl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AlumnoControl</servlet-name>
+        <url-pattern>/AlumnoControl</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

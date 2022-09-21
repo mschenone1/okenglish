@@ -17,17 +17,25 @@ import java.lang.String;
 import java.util.ArrayList;
 
 /**
+ * Clase: Objeto de acceso a datos de Alumnos
  *
- * @author msche
+ * @author Marco Schenone
  */
 public class AlumnoDao implements iDao<Alumnos, Integer> {
 
+    /**
+     * Metodo para encontrar un alumno por id
+     *
+     * @param id
+     * @return uno objeto alumno
+     * @throws SQLException
+     */
     @Override
     public Alumnos encontrar(Integer id) throws SQLException {
 
         Connection conn = null;
         Alumnos al = new Alumnos();
-                
+
         try {
             conn = MySQLConexion.getConexion();
             String sql = "SELECT idalumno, tipo_doc, num_doc, apePaterno, \n"
@@ -66,6 +74,13 @@ public class AlumnoDao implements iDao<Alumnos, Integer> {
         return al;
     }
 
+    /**
+     * Metodo para encontrar a todos los alumnoes
+     *
+     * @param id
+     * @return una lista de objetos alumno
+     * @throws SQLException
+     */
     @Override
     public List<Alumnos> encontrarTodos() throws SQLException {
         List<Alumnos> lis = new ArrayList<>();
@@ -111,6 +126,13 @@ public class AlumnoDao implements iDao<Alumnos, Integer> {
         return lis;
     }
 
+    /**
+     * Metodo para Insertar un alumno
+     *
+     * @param ad objeto alumno
+     * @return inserto boolean
+     * @throws SQLException
+     */
     @Override
     public boolean insertar(Alumnos al) throws SQLException {
         Connection conn = null;
@@ -148,6 +170,13 @@ public class AlumnoDao implements iDao<Alumnos, Integer> {
         return inserto;
     }
 
+    /**
+     * Metodo para Actualizar un alumno
+     *
+     * @param ad objeto alumno
+     * @return actualizo boolean
+     * @throws SQLException
+     */
     @Override
     public boolean actualizar(Alumnos al) throws SQLException {
         Connection conn = null;
@@ -186,6 +215,13 @@ public class AlumnoDao implements iDao<Alumnos, Integer> {
         return actualizo;
     }
 
+    /**
+     * Metodo para Borrar un alumno
+     *
+     * @param ad objeto alumno
+     * @return borro boolean
+     * @throws SQLException
+     */
     @Override
     public boolean borrar(Alumnos al) throws SQLException {
         Connection conn = null;

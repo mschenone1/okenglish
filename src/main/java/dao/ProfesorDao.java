@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,23 +14,26 @@ import java.util.List;
 import java.util.Optional;
 import modelo.Profesores;
 import util.MySQLConexion;
+
 /**
+ * Clase: Objeto de acceso a datos de Administradores
  *
- * @author msche
+ * @author Marco Schenone
  */
 public class ProfesorDao implements iDao<Profesores, Integer> {
 
     /**
+     * Metodo para encontrar un profesor por id
      *
      * @param id
-     * @return
+     * @return uno objeto profesor
      * @throws SQLException
      */
     @Override
     public Profesores encontrar(Integer id) throws SQLException {
         Connection conn = null;
         Profesores ad = new Profesores();
-               
+
         try {
             conn = MySQLConexion.getConexion();
             String sql = "SELECT idprofesor, tipo_doc, num_doc, apePaterno, \n"
@@ -40,7 +44,7 @@ public class ProfesorDao implements iDao<Profesores, Integer> {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                 ad.setIdProfesor(rs.getInt("idprofesor"));
+                ad.setIdProfesor(rs.getInt("idprofesor"));
                 ad.setTipoDoc(rs.getString("tipo_doc"));
                 ad.setNumDoc(rs.getString("num_doc"));
                 ad.setApePaterno(rs.getString("apePaterno"));
@@ -68,6 +72,13 @@ public class ProfesorDao implements iDao<Profesores, Integer> {
         return ad;
     }
 
+    /**
+     * Metodo para encontrar a todos los profesores
+     *
+     * @param id
+     * @return una lista de objetos profesor
+     * @throws SQLException
+     */
     @Override
     public List<Profesores> encontrarTodos() throws SQLException {
         List<Profesores> lis = new ArrayList<>();
@@ -113,6 +124,13 @@ public class ProfesorDao implements iDao<Profesores, Integer> {
         return lis;
     }
 
+    /**
+     * Metodo para Insertar un profesor
+     *
+     * @param ad objeto profesor
+     * @return inserto boolean
+     * @throws SQLException
+     */
     @Override
     public boolean insertar(Profesores ad) throws SQLException {
         Connection conn = null;
@@ -150,6 +168,13 @@ public class ProfesorDao implements iDao<Profesores, Integer> {
         return inserto;
     }
 
+    /**
+     * Metodo para Actualizar un profesor
+     *
+     * @param ad objeto profesor
+     * @return actualizo boolean
+     * @throws SQLException
+     */
     @Override
     public boolean actualizar(Profesores ad) throws SQLException {
         Connection conn = null;
@@ -188,6 +213,13 @@ public class ProfesorDao implements iDao<Profesores, Integer> {
         return actualizo;
     }
 
+    /**
+     * Metodo para Borrar un profesor
+     *
+     * @param ad objeto profesor
+     * @return borro boolean
+     * @throws SQLException
+     */
     @Override
     public boolean borrar(Profesores ad) throws SQLException {
         Connection conn = null;

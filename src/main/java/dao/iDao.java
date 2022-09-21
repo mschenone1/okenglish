@@ -9,13 +9,20 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Interface iDao
  *
- * @author msche
+ * @author Marco Schenone
  * @param <T>
  * @param <ID>
  */
 public interface iDao<T, ID> {
 
+    /**
+     * Metodos abstractos basicos para Dao
+     *
+     * @param <T>
+     * @param <ID>
+     */
     T encontrar(ID id) throws SQLException;
 
     List<T> encontrarTodos() throws SQLException;

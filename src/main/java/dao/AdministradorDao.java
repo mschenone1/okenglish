@@ -16,22 +16,24 @@ import modelo.Administradores;
 import util.MySQLConexion;
 
 /**
+ * Clase: Objeto de acceso a datos de Administradores
  *
- * @author msche
+ * @author Marco Schenone
  */
 public class AdministradorDao implements iDao<Administradores, Integer> {
 
     /**
+     * Metodo para encontrar un administrador por id
      *
      * @param id
-     * @return
+     * @return uno objeto administrador
      * @throws SQLException
      */
     @Override
     public Administradores encontrar(Integer id) throws SQLException {
         Connection conn = null;
         Administradores ad = new Administradores();
-                
+
         try {
             conn = MySQLConexion.getConexion();
             String sql = "SELECT idadmin, tipo_doc, num_doc, apePaterno, \n"
@@ -53,7 +55,7 @@ public class AdministradorDao implements iDao<Administradores, Integer> {
                 ad.setEmail(rs.getString("email"));
                 ad.setFecNac(rs.getDate("fecNac"));
                 ad.setSexo(rs.getString("sexo"));
-                ad.setSexo(rs.getString("usuario"));
+                ad.setUsuario(rs.getString("usuario"));
 
             }
         } catch (Exception e) {
@@ -70,6 +72,13 @@ public class AdministradorDao implements iDao<Administradores, Integer> {
         return ad;
     }
 
+    /**
+     * Metodo para encontrar a todos los administradores
+     *
+     * @param id
+     * @return una lista de objetos administrador
+     * @throws SQLException
+     */
     @Override
     public List<Administradores> encontrarTodos() throws SQLException {
         List<Administradores> lis = new ArrayList<>();
@@ -115,6 +124,13 @@ public class AdministradorDao implements iDao<Administradores, Integer> {
         return lis;
     }
 
+    /**
+     * Metodo para Insertar un administrador
+     *
+     * @param ad objeto administrador
+     * @return inserto boolean
+     * @throws SQLException
+     */
     @Override
     public boolean insertar(Administradores ad) throws SQLException {
         Connection conn = null;
@@ -152,6 +168,13 @@ public class AdministradorDao implements iDao<Administradores, Integer> {
         return inserto;
     }
 
+    /**
+     * Metodo para Actualizar un administrador
+     *
+     * @param ad objeto administrador
+     * @return actualizo boolean
+     * @throws SQLException
+     */
     @Override
     public boolean actualizar(Administradores ad) throws SQLException {
         Connection conn = null;
@@ -190,6 +213,13 @@ public class AdministradorDao implements iDao<Administradores, Integer> {
         return actualizo;
     }
 
+    /**
+     * Metodo para Borrar un administrador
+     *
+     * @param ad objeto administrador
+     * @return borro boolean
+     * @throws SQLException
+     */
     @Override
     public boolean borrar(Administradores ad) throws SQLException {
         Connection conn = null;
