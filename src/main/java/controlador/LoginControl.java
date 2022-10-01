@@ -81,7 +81,7 @@ public class LoginControl extends HttpServlet {
                     System.out.println("Se encontro al usuario");
                     HttpSession ses = request.getSession(true);
                     ses.setAttribute("usuario", d);
-                    String pag = "/jsp/Admin/InicioDocente.jsp";
+                    String pag = "/jsp/Docente/InicioDocente.jsp";
                     //redirige a la pagina Menu
                     request.getRequestDispatcher(pag).forward(request, response);
                 } else if (id >= 2000) {
@@ -90,7 +90,7 @@ public class LoginControl extends HttpServlet {
                     System.out.println("Se encontro al usuario");
                     HttpSession ses = request.getSession(true);
                     ses.setAttribute("usuario", d);
-                    String pag = "/jsp/Admin/InicioAlumno.jsp";
+                    String pag = "/jsp/Alumno/InicioAlumno.jsp";
                     //redirige a la pagina Menu
                     request.getRequestDispatcher(pag).forward(request, response);
                 } else if (id >= 1000) {

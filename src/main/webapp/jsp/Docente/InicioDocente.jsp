@@ -1,27 +1,38 @@
+<%@page import="modelo.Persona"%>
+<%@page import="modelo.Profesores"%>
+<%@page import="modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="../../css/adminlte.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../../css/mystyle.css" rel="stylesheet" type="text/css"/>
-        <script src="../../js/cambiarPestanna.js" type="text/javascript"></script>
+        <link href="css/adminlte.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/mystyle.css" rel="stylesheet" type="text/css"/>
+        <script src="js/cambiarPestanna.js" type="text/javascript"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <title>JSP Page</title>
     </head>
+    <%
+        HttpSession ses = request.getSession(false);
+        if (ses == null) {
+            response.sendRedirect("../../index.jsp");
+        }
+        Usuario usr = (Usuario) ses.getAttribute("usuario");
+
+    %>
     <header class="cabecera">
-            <a href="../../index.html">
-            <img id="logo" src="../../imagenes/Logos/docente.png" alt=""/></a>
+        <a href="index.jsp">
+            <img id="logo" src="imagenes/Logos/admin.png" alt=""/></a>
         <nav>
             <div class="principal">
             <h4 style="margin-top: 30px">Nombre de docente</h4>
-            <img src="../../imagenes/Usuarios/hombre.jpg" alt="" class="img-circle" style="width: 80px; height: 80px"/>
-            <a href="../../index.html">
-                <img style="margin-top: 30px" id="icono" src="../../imagenes/icosalir.png" alt=""/>
-            </a>
+            <img src="imagenes/Usuarios/hombre.jpg" alt="" class="img-circle" style="width: 80px; height: 80px"/>
+            <a class="nav-link" href="LoginControl?opc=2">
+                    <img style="margin-top: 30px" id="icono" src="imagenes/icosalir.png" alt=""/>
+                </a>
         </nav>	
     </header>
-     <body onload="javascript:cambiarPestanna(pestanas,pestana1);" style="background-image: url('../../imagenes/fondo.png');background-repeat: no-repeat; background-size: cover">
+     <body onload="javascript:cambiarPestanna(pestanas,pestana1);" style="background-image: url('imagenes/fondo.png');background-repeat: no-repeat; background-size: cover">
       <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <div class="contenedor">
             <div id="pestanas">
@@ -33,13 +44,13 @@
             </div>
             <div id="contenidopestanas">
                 <div id="cpestana1" class="embed-container">
-                    <iframe src="Docente_curso.jsp" frameborder="0" allowfullscreen></iframe> 
+                    <iframe src="jsp/Docente/Docente_curso.jsp" frameborder="0" allowfullscreen></iframe> 
                 </div>
                 <div id="cpestana2" class="embed-container">
-                    <iframe src="Docente_leccion.jsp" frameborder="0" allowfullscreen></iframe> 
+                    <iframe src="jsp/Docente/Docente_leccion.jsp" frameborder="0" allowfullscreen></iframe> 
                 </div>
                 <div id="cpestana3" class="embed-container">
-                    <iframe src="Docente_alumnos.jsp" frameborder="0" allowfullscreen></iframe> 
+                    <iframe src="jsp/Docente/Docente_alumnos.jsp" frameborder="0" allowfullscreen></iframe> 
                 </div>
             </div>
         </div>
