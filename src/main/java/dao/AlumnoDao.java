@@ -46,7 +46,7 @@ public class AlumnoDao implements iDao<Alumnos, Integer> {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                al.setIdAlumno(rs.getInt("idalumno"));
+                al.setId(rs.getInt("idalumno"));
                 al.setTipoDoc(rs.getString("tipo_doc"));
                 al.setNumDoc(rs.getString("num_doc"));
                 al.setApePaterno(rs.getString("apePaterno"));
@@ -96,7 +96,7 @@ public class AlumnoDao implements iDao<Alumnos, Integer> {
             //llenar el arraylist con la clase entidad
             while (rs.next()) {
                 Alumnos al = new Alumnos();
-                al.setIdAlumno(rs.getInt("idalumno"));
+                al.setId(rs.getInt("idalumno"));
                 al.setTipoDoc(rs.getString("tipo_doc"));
                 al.setNumDoc(rs.getString("num_doc"));
                 al.setApePaterno(rs.getString("apePaterno"));
@@ -199,7 +199,7 @@ public class AlumnoDao implements iDao<Alumnos, Integer> {
             st.setDate(9, (java.sql.Date) al.getFecNac());
             st.setString(10, al.getSexo());
             st.setString(11, al.getUsuario());
-            st.setInt(12, al.getIdAlumno());
+            st.setInt(12, al.getId());
             actualizo = st.executeUpdate() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -231,7 +231,7 @@ public class AlumnoDao implements iDao<Alumnos, Integer> {
             conn = MySQLConexion.getConexion();
             String sql = "DELETE FROM  alumnos WHERE idalumno = ?";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, al.getIdAlumno());
+            st.setInt(1, al.getId());
             borro = st.executeUpdate() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();

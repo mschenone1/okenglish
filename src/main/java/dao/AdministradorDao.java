@@ -44,7 +44,7 @@ public class AdministradorDao implements iDao<Administradores, Integer> {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                ad.setIdadmin(rs.getInt("idadmin"));
+                ad.setId(rs.getInt("idadmin"));
                 ad.setTipoDoc(rs.getString("tipo_doc"));
                 ad.setNumDoc(rs.getString("num_doc"));
                 ad.setApePaterno(rs.getString("apePaterno"));
@@ -94,7 +94,7 @@ public class AdministradorDao implements iDao<Administradores, Integer> {
             //llenar el arraylist con la clase entidad
             while (rs.next()) {
                 Administradores ad = new Administradores();
-                ad.setIdadmin(rs.getInt("idadmin"));
+                ad.setId(rs.getInt("idadmin"));
                 ad.setTipoDoc(rs.getString("tipo_doc"));
                 ad.setNumDoc(rs.getString("num_doc"));
                 ad.setApePaterno(rs.getString("apePaterno"));
@@ -197,7 +197,7 @@ public class AdministradorDao implements iDao<Administradores, Integer> {
             st.setDate(9, (java.sql.Date) ad.getFecNac());
             st.setString(10, ad.getSexo());
             st.setString(11, ad.getUsuario());
-            st.setInt(12, ad.getIdadmin());
+            st.setInt(12, ad.getId());
             actualizo = st.executeUpdate() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -229,7 +229,7 @@ public class AdministradorDao implements iDao<Administradores, Integer> {
             conn = MySQLConexion.getConexion();
             String sql = "DELETE FROM  administradores WHERE idadmin = ?";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, ad.getIdadmin());
+            st.setInt(1, ad.getId());
             borro = st.executeUpdate() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -1,0 +1,118 @@
+body{
+	margin: 0 0px 0 0;
+}
+.principal{
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+}
+.item-principal{
+	flex-basis: calc(50% - 0px);
+}
+#img-prin{
+ max-width: 100%;
+ max-height: 100%;
+}
+.cabecera{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+        background-color: #C1E8FF;
+}
+#logo {
+	width: 400px;
+	height: 100px;
+}
+#icono{
+	padding: 0px;
+	width: 30px;
+}
+.contenedor{
+    width: 1080px;
+    margin: auto;
+   /* background: black;
+    color: bisque;*/
+    padding: 20px 15px 50px 50px;
+    border-radius: 10px;
+    box-shadow: 0 10px 10px 0px rgba(0, 0, 0, 0.8);
+}
+
+#pestanas {
+    float: top;
+    font-size: 3ex;
+    font-weight: bold;
+}
+
+#pestanas ul{
+    margin-left: -40px;    
+}
+
+#pestanas li{
+    list-style-type: none;
+    float: left;
+    text-align: center;
+    margin: 0px 2px -2px -0px;
+    background: #004aad;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 2px solid white;
+    border-bottom: dimgray;
+    padding: 0px 20px 0px 20px;
+}
+
+#pestanas a:link{
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+#contenidopestanas{
+    clear: both;  
+    background: #C1E8FF;
+    padding: 20px 0px 20px 20px;
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border: 2px solid white;
+    width: 1025px;
+    
+}
+.embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+}
+.embed-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.context-menu {
+position: absolute;
+text-align: center;
+background: lightgray;
+border: 1px solid black;
+}
+  
+.context-menu ul {
+ padding: 0px;
+margin: 0px;
+min-width: 150px;
+list-style: none;
+}
+  
+.context-menu ul li {
+padding-bottom: 7px;
+padding-top: 7px;
+border: 1px solid black;
+}
+  
+.context-menu ul li a {
+text-decoration: none;
+color: black;
+}
+  
+.context-menu ul li:hover {
+background: darkgray;
+}

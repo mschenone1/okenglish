@@ -28,7 +28,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author msche
  */
-@WebServlet(name = "LoginControl", urlPatterns = {"/login"})
+/*@WebServlet(name = "LoginControl", urlPatterns = {"/login"})*/
 public class LoginControl extends HttpServlet {
 
     UsuarioDao daoUsuario = new UsuarioDao();
@@ -72,7 +72,7 @@ public class LoginControl extends HttpServlet {
             if (d == null) {
                 System.out.println("No se enecontro al usuario");
                 request.setAttribute("dato", "Clave o Usuario incorrecto");
-                request.getRequestDispatcher("/login.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
             } else {
 
                 if (id >= 3000) {
@@ -81,8 +81,8 @@ public class LoginControl extends HttpServlet {
                     System.out.println("Se encontro al usuario");
                     HttpSession ses = request.getSession(true);
                     ses.setAttribute("usuario", d);
-                    String pag = "/index.html";
-                    //redirige a la pagina index
+                    String pag = "/jsp/Admin/InicioDocente.jsp";
+                    //redirige a la pagina Menu
                     request.getRequestDispatcher(pag).forward(request, response);
                 } else if (id >= 2000) {
                     Alumnos alumno = daoAlumno.encontrar(id);
@@ -90,8 +90,8 @@ public class LoginControl extends HttpServlet {
                     System.out.println("Se encontro al usuario");
                     HttpSession ses = request.getSession(true);
                     ses.setAttribute("usuario", d);
-                    String pag = "/index.html";
-                    //redirige a la pagina index
+                    String pag = "/jsp/Admin/InicioAlumno.jsp";
+                    //redirige a la pagina Menu
                     request.getRequestDispatcher(pag).forward(request, response);
                 } else if (id >= 1000) {
                     Administradores administrador = daoAdministrador.encontrar(id);
@@ -99,8 +99,8 @@ public class LoginControl extends HttpServlet {
                     System.out.println("Se encontro al usuario");
                     HttpSession ses = request.getSession(true);
                     ses.setAttribute("usuario", d);
-                    String pag = "/index.html";
-                    //redirige a la pagina index
+                    String pag = "/jsp/Admin/InicioAdmin.jsp";
+                    //redirige a la pagina Menu
                     request.getRequestDispatcher(pag).forward(request, response);
                 }
                 
@@ -113,7 +113,7 @@ public class LoginControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession ses = request.getSession();
         ses.removeAttribute("usuario");
-        response.sendRedirect("Menu.jsp");
+        response.sendRedirect("index.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
