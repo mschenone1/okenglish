@@ -1,3 +1,7 @@
+<%@page import="dao.AdministradorDao"%>
+<%@page import="dao.AlumnoDao"%>
+<%@page import="dao.ProfesorDao"%>
+<%@page import="modelo.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -10,9 +14,11 @@
     </head>
     <body style="background-color: #C1E8FF">
         <br><center>
-            <a href="Usuarios/Admin_alumno.jsp" class="btn btn-secondary">Alumno</a>
-            <a href="Usuarios/Admin_docente.jsp" class="btn btn-secondary">Docente</a>
-            <a href="Usuarios/Admin_admin.jsp" class="btn btn-secondary">Administrador</a>
-        </center>
-    </body>
+        <a href="../../AlumnoControl?opc=1" class="btn btn-secondary">Alumno</a>
+        <a href="../../ProfesorControl?opc=1" class="btn btn-secondary">Docente</a>
+        <a href="../../AdministradorControl?opc=1" class="btn btn-secondary">Administrador</a>
+
+        
+    </center>
+</body>
 </html>

@@ -64,7 +64,7 @@ public class AdministradorControl extends HttpServlet {
 
     protected void listar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        String pag = "Usuarios/Admin_admin.jsp";
+        String pag = "jsp/Admin/Usuarios/Admin_admin.jsp";
         request.setAttribute("dato", daoAdministrador.encontrarTodos());
         request.getRequestDispatcher(pag).forward(request, response);
 
@@ -104,18 +104,46 @@ public class AdministradorControl extends HttpServlet {
 
     protected void actualizar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        String pag = "Usuarios/Admin_admin.jsp";
-        request.setAttribute("dato", daoAdministrador.encontrarTodos());
-        request.getRequestDispatcher(pag).forward(request, response);
+        String password = request.getParameter("password");
+
+        Usuario u = new Usuario();
+        u.setUsuario(request.getParameter("username"));
+        u.setPassword(password);
+        u.setIdRol(1);
+        u.setEnabled(1);
+
+        daoUsuario.actualizar(u);
+
+        Administradores d = new Administradores();
+
+        d.setTipoDoc(request.getParameter("tipodoc"));
+        d.setNumDoc(request.getParameter("numdoc"));
+        d.setApePaterno(request.getParameter("apepaterno"));
+        d.setApeMaterno(request.getParameter("apematerno"));
+        d.setNombres(request.getParameter("nombres"));
+        d.setTelefono(request.getParameter("telefono"));
+        d.setCelular(request.getParameter("celular"));
+        d.setEmail(request.getParameter("email"));
+        //d.setFecNacimiento(new Date(request.getParameter("fecnacimiento")));
+        d.setSexo(request.getParameter("sexo"));
+        d.setUsuario(request.getParameter("usuario"));
+
+        daoAdministrador.actualizar(d);
+
+        response.sendRedirect("Usuarios/Admin_admin.jsp");
 
     }
 
     protected void borrar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
+        int idad = Integer.parseInt(request.getParameter("idAdmin"));
+        Administradores d = new Administradores();
+        daoAdministrador.encontrar(idad);
+        daoAdministrador.borrar(d);
         String pag = "Usuarios/Admin_admin.jsp";
-        request.setAttribute("dato", daoAdministrador.encontrarTodos());
-        request.getRequestDispatcher(pag).forward(request, response);
 
+        //redige a la pagina listado
+        request.getRequestDispatcher(pag).forward(request, response);
     }
 
     protected void encontrar(HttpServletRequest request, HttpServletResponse response)
